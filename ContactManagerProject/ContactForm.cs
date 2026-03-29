@@ -20,6 +20,11 @@ namespace ContactManagerProject
         private TextBox searchTextBox;
         private Button searchButton;
         private ListBox contactsListBox;
+
+        private readonly string _namePlaceholder = "Имя";
+        private readonly string _phonePlaceholder = "Телефон";
+        private readonly string _searchPlaceholder = "Поиск";
+
         public ContactForm()
         {
             this.Text = "Управление контактами";
@@ -29,46 +34,62 @@ namespace ContactManagerProject
             {
                 Location = new System.Drawing.Point(10, 10),
                 Width = 150,
-                //PlaceholderText = "Имя"
+                TabIndex = 2
             };
+            nameTextBox.Text = _namePlaceholder;
+            nameTextBox.Enter += TextBox_Enter;
+            nameTextBox.Leave += TextBox_Leave;
+
             phoneNumberTextBox = new TextBox
             {
                 Location = new System.Drawing.Point(170, 10),
                 Width = 150,
-                //PlaceholderText = "Телефон"
+                TabIndex = 3
             };
+            phoneNumberTextBox.Text = _phonePlaceholder;
+            phoneNumberTextBox.Enter += TextBox_Enter;
+            phoneNumberTextBox.Leave += TextBox_Leave;
+
             addContactButton = new Button
             {
                 Location = new System.Drawing.Point(10, 40),
                 Text = "Добавить",
-                Width = 100
+                Width = 100,
+                TabIndex = 0
             };
             addContactButton.Click += AddContactButton_Click;
             removeContactButton = new Button
             {
                 Location = new System.Drawing.Point(120, 40),
                 Text = "Удалить",
-                Width = 100
+                Width = 100,
+                TabIndex = 1
             };
             removeContactButton.Click += RemoveContactButton_Click;
             searchTextBox = new TextBox
             {
                 Location = new System.Drawing.Point(10, 70),
                 Width = 200,
-                //PlaceholderText = "Поиск"
+                TabIndex = 4
             };
+            searchTextBox.Text = _searchPlaceholder;
+            searchTextBox.Enter += TextBox_Enter;
+            searchTextBox.Leave += TextBox_Leave;
+
             searchButton = new Button
             {
                 Location = new System.Drawing.Point(220, 70),
                 Text = "Искать",
-                Width = 80
+                Width = 80,
+                TabIndex = 5
             };
             searchButton.Click += SearchButton_Click;
             contactsListBox = new ListBox
             {
                 Location = new System.Drawing.Point(10, 100),
                 Width = 450,
-                Height = 200
+                Height = 200,
+                TabIndex = 6
             };
             this.Controls.Add(nameTextBox);
             this.Controls.Add(phoneNumberTextBox);
@@ -80,6 +101,33 @@ namespace ContactManagerProject
             contactManager = new ContactManager();
             UpdateContactsList();
         }
+
+        private void TextBox_Enter(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == GetPlaceholderForTextBox(textBox))
+            {
+                textBox.Text = "";
+                textBox.ForeColor = Color.Black;
+            }
+        }
+        private void TextBox_Leave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = GetPlaceholderForTextBox(textBox);
+                textBox.ForeColor = Color.Gray;
+            }
+        }
+        private string GetPlaceholderForTextBox(TextBox textBox)
+        {
+            if (textBox == nameTextBox) return _namePlaceholder;
+            if (textBox == phoneNumberTextBox) return _phonePlaceholder;
+            if (textBox == searchTextBox) return _searchPlaceholder;
+            return "";
+        }
+
         private void UpdateContactsList()
         {
             contactsListBox.Items.Clear();

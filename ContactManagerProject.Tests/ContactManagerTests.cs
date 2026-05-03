@@ -182,6 +182,7 @@ namespace ContactManagerProject.Tests
             Assert.IsTrue(loadedManager.GetGroups().Contains("ТестГруппа"));
         }
 
+
         // SearchContacts по названию группы возвращает соответствующие контакты
         [TestMethod]
         public void SearchContacts_FindsByGroup()

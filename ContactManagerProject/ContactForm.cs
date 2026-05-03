@@ -28,11 +28,8 @@ namespace ContactManagerProject
         private readonly string _namePlaceholder = "Имя";
         private readonly string _phonePlaceholder = "Телефон";
         private readonly string _searchPlaceholder = "Поиск";
-<<<<<<< Updated upstream
-=======
         private readonly string _newGroupPlaceholder = "Новая группа";
 
->>>>>>> Stashed changes
 
         public ContactForm()
         {
@@ -60,8 +57,6 @@ namespace ContactManagerProject
             phoneNumberTextBox.Enter += TextBox_Enter;
             phoneNumberTextBox.Leave += TextBox_Leave;
 
-<<<<<<< Updated upstream
-=======
             groupComboBox = new ComboBox
             {
                 Location = new Point(330, 10),
@@ -70,7 +65,6 @@ namespace ContactManagerProject
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
 
->>>>>>> Stashed changes
             addContactButton = new Button
             {
                 Location = new System.Drawing.Point(480, 10),
@@ -104,11 +98,7 @@ namespace ContactManagerProject
                 Location = new System.Drawing.Point(360, 45),
                 Text = "Удалить",
                 Width = 100,
-<<<<<<< Updated upstream
-                TabIndex = 1
-=======
                 TabIndex = 6
->>>>>>> Stashed changes
             };
             removeContactButton.Click += RemoveContactButton_Click;
 
@@ -116,11 +106,7 @@ namespace ContactManagerProject
             {
                 Location = new System.Drawing.Point(10, 80),
                 Width = 200,
-<<<<<<< Updated upstream
-                TabIndex = 4
-=======
                 TabIndex = 7
->>>>>>> Stashed changes
             };
             searchTextBox.Text = _searchPlaceholder;
             searchTextBox.Enter += TextBox_Enter;
@@ -131,11 +117,7 @@ namespace ContactManagerProject
                 Location = new System.Drawing.Point(220, 80),
                 Text = "Искать",
                 Width = 80,
-<<<<<<< Updated upstream
-                TabIndex = 5
-=======
                 TabIndex = 8
->>>>>>> Stashed changes
             };
             searchButton.Click += SearchButton_Click;
 
@@ -151,17 +133,10 @@ namespace ContactManagerProject
 
             contactsListBox = new ListBox
             {
-<<<<<<< Updated upstream
-                Location = new System.Drawing.Point(10, 100),
-                Width = 450,
-                Height = 200,
-                TabIndex = 6
-=======
                 Location = new System.Drawing.Point(10, 115),
                 Width = 660,
                 Height = 240,
                 TabIndex = 10
->>>>>>> Stashed changes
             };
             this.Controls.Add(nameTextBox);
             this.Controls.Add(phoneNumberTextBox);
@@ -181,35 +156,6 @@ namespace ContactManagerProject
         }
 
         private void TextBox_Enter(object sender, EventArgs e)
-<<<<<<< Updated upstream
-        {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == GetPlaceholderForTextBox(textBox))
-            {
-                textBox.Text = "";
-                textBox.ForeColor = Color.Black;
-            }
-        }
-        private void TextBox_Leave(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = GetPlaceholderForTextBox(textBox);
-                textBox.ForeColor = Color.Gray;
-            }
-        }
-        private string GetPlaceholderForTextBox(TextBox textBox)
-        {
-            if (textBox == nameTextBox) return _namePlaceholder;
-            if (textBox == phoneNumberTextBox) return _phonePlaceholder;
-            if (textBox == searchTextBox) return _searchPlaceholder;
-            return "";
-        }
-
-        private void UpdateContactsList()
-=======
->>>>>>> Stashed changes
         {
             TextBox textBox = (TextBox)sender;
             if (textBox.Text == GetPlaceholderForTextBox(textBox))

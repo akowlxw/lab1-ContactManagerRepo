@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace ContactManagerProject.Tests
 {
@@ -126,6 +127,73 @@ namespace ContactManagerProject.Tests
             var results = manager.SearchContacts("");
 
             Assert.AreEqual(2, results.Count);
+        }
+
+        //
+        // тестирование функционала групп контактов
+        //
+
+        // AddContact без указания группы присваивает группу по умолчанию
+        [TestMethod]
+        public void AddContact_WithoutGroup_UsesDefaultGroup()
+        {
+            var manager = new ContactManager();
+
+            manager.AddContact(new Contact("ТестИмя", "12345", ""));
+
+            Assert.AreEqual(ContactManager.DefaultGroup, manager.Contacts[0].Group);
+        }
+
+        // добавление новой группы приводит к её появлению в списке групп
+        [TestMethod]
+        public void AddGroup_AddsNewGroupToList()
+        {
+            var manager = new ContactManager();
+
+            manager.AddGroup("ТестГруппа");
+
+            Assert.IsTrue(manager.GetGroups().Contains("ТестГруппа"));
+        }
+
+        // GetContactsByGroup возвращает только контакты выбранной группы
+        [TestMethod]
+        public void GetContactsByGroup_ReturnsOnlySelectedGroup()
+        {
+            var manager = new ContactManager();
+            manager.AddGroup("Семья");
+            manager.AddGroup("Друзья");
+            manager.AddContact(new Contact("ТестИмя1", "12345", "Семья"));
+            manager.AddContact(new Contact("ТестИмя2", "67890", "Друзья"));
+
+            var result = manager.GetContactsByGroup("Семья");
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("ТестИмя1", result[0].Name);
+        }
+        // LoadContacts Загрузка данных сохраняет группы, даже если в них нет контактов
+        [TestMethod]
+        public void LoadContacts_LoadsSavedGroupWithoutContacts()
+        {
+            var manager = new ContactManager();
+            manager.AddGroup("ТестГруппа");
+
+            var loadedManager = new ContactManager();
+
+            Assert.IsTrue(loadedManager.GetGroups().Contains("ТестГруппа"));
+        }
+
+        // SearchContacts по названию группы возвращает соответствующие контакты
+        [TestMethod]
+        public void SearchContacts_FindsByGroup()
+        {
+            var manager = new ContactManager();
+            manager.AddGroup("Семья");
+            manager.AddContact(new Contact("ТестИмя", "12345", "Семья"));
+
+            var result = manager.SearchContacts("Семья");
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("ТестИмя", result.First().Name);
         }
     }
 }
